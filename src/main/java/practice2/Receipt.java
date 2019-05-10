@@ -16,18 +16,24 @@ public class Receipt {
         BigDecimal subTotal = calculateSubtotal(products, items);
 
         for (Product product : products) {
-            OrderItem curItem = findOrderItemByProduct(items, product);
-
-            BigDecimal reducedPrice = product.getPrice()
-                    .multiply(product.getDiscountRate())
-                    .multiply(new BigDecimal(curItem.getCount()));
-
+            BigDecimal reducedPrice=CalculateReducePrice(product,items);
             subTotal = subTotal.subtract(reducedPrice);
         }
         BigDecimal taxTotal = subTotal.multiply(tax);
         BigDecimal grandTotal = subTotal.add(taxTotal);
 
         return grandTotal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    private BigDecimal CalculateReducePrice(Product product,List<OrderItem> items){
+
+            OrderItem curItem = findOrderItemByProduct(items, product);
+
+            BigDecimal reducedPrice = product.getPrice()
+                    .multiply(product.getDiscountRate())
+                    .multiply(new BigDecimal(curItem.getCount()));
+
+        return reducedPrice;
     }
 
 
