@@ -1,6 +1,7 @@
 package practice3;
 
 import java.math.BigDecimal;
+
 public class OrderLineItem {
     private BigDecimal price;
 
